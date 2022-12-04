@@ -1,6 +1,6 @@
 import tkinter
 import customtkinter
-
+# 변화가 있는지 테스트 해볼게용
 
 customtkinter.set_appearance_mode("System")
 customtkinter.set_default_color_theme("green")
