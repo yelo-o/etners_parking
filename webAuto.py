@@ -25,11 +25,20 @@ login_btn.click()
 
 # # 메인 페이지 진입
 time.sleep(3)
+# 차량 검색
 input_car_number = browser.find_element(By.XPATH, '//*[@id="schCarNo"]')
 input_car_number.send_keys(abc)
 # search_btn = browser.find_element(By.CLASS_NAME, 'btnS1_1 btn')
 search_btn = browser.find_element(By.XPATH, '//*[@id="sForm"]/input[3]')
 search_btn.click()
+
+# 버튼 및 비고 설정
+btn_2hr = browser.find_element(By.XPATH,'//*[@id="2"]')
+btn_1hr = browser.find_element(By.XPATH,'//*[@id="3"]')
+btn_30min = browser.find_element(By.XPATH, '//*[@id="4"]')
+memo = browser.find_element(By.XPATH, '//*[@id="memo"]')
+
+# 할인 등록 전, 이미 등록되어 있는지 사전 확인
 
 # 셀레니움 꺼지지 않도록 유지
 time.sleep(10)

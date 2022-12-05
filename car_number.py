@@ -34,5 +34,4 @@ button1.pack(pady=12, padx=10)
 label2 = customtkinter.CTkLabel(master=frame, text="차량 정보", font=("Roboto", 24))
 label2.pack(pady=12, padx=10)
 
-
 root.mainloop()

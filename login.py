@@ -1,6 +1,5 @@
 import tkinter
 import customtkinter
-# 변화가 있는지 테스트 해볼게용
 
 customtkinter.set_appearance_mode("System")
 customtkinter.set_default_color_theme("green")
@@ -10,18 +9,21 @@ root.geometry("500x350")
 root.title("ETNERS PARKING")
 root.iconbitmap("./favicon.ico")
 
-us_ID = "2b-704"
-us_PW = "20200801"
+uspace = ["2b-704","20200801"]
 
 # 함수 정의 부분
 def login():
     print("data saved.")
     info_get = [entry1.get(),entry2.get()]
     print(info_get)
+    if info_get == uspace:
+        print("로그인합니다.")
+    else:
+        print("아이디와 비밀번호를 확인해주세요.")
 
 def autofill():
-    entry1.configure(textvariable=us_ID).get()
-    entry2.configure(textvariable=us_PW).get()
+    entry1.configure(textvariable=uspace[0]).get()
+    entry2.configure(textvariable=uspace[1]).get()
 
 
 frame = customtkinter.CTkFrame(master=root)
