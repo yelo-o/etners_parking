@@ -22,8 +22,8 @@ def login():
         print("아이디와 비밀번호를 확인해주세요.")
 
 def autofill():
-    entry1.configure(text)
-    entry2.configure(text=uspace[1])
+    entry1.configure(placeholder_text=uspace[0])
+    entry2.configure(placeholder_text=uspace[1], show="*")
 
 
 frame = customtkinter.CTkFrame(master=root)
