@@ -1,7 +1,11 @@
+from datetime import datetime
 import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
+
+# 함수 설정
+
 
 # 자동화 브라우저 구동
 browser = webdriver.Chrome()
@@ -12,7 +16,7 @@ browser.get("http://uspace.awp1.co.kr/login")
 # 로그인
 real_id = "2b-704"
 real_pw = "20200801"
-abc = '64조3973'
+abc = '149저1200'
 
 input_id = browser.find_element(By.XPATH,'//*[@id="userId"]')
 input_pw = browser.find_element(By.XPATH,'//*[@id="loginForm"]/li[3]/input')
@@ -33,10 +37,26 @@ search_btn = browser.find_element(By.XPATH, '//*[@id="sForm"]/input[3]')
 search_btn.click()
 
 # 버튼 및 비고 설정
-btn_2hr = browser.find_element(By.XPATH,'//*[@id="2"]')
+# 오후 5시 이전의 XPATH
+btn_2hr = browser.find_element(By.XPATH,'//*[@id="1"]')
+btn_30min = browser.find_element(By.XPATH, '//*[@id="2"]')
 btn_1hr = browser.find_element(By.XPATH,'//*[@id="3"]')
-btn_30min = browser.find_element(By.XPATH, '//*[@id="4"]')
 memo = browser.find_element(By.XPATH, '//*[@id="memo"]')
+
+# 시간 차이 계산
+time_parking = browser.find_element(By.XPATH,'//*[@id="entryDate"]').text
+time_in = time_parking[11:]
+now = datetime.now()
+time_now = str(now.time())[0:8]
+FMT = '%H:%M:%S'
+tdelta = datetime.strptime(time_now, FMT) - datetime.strptime(time_in, FMT)
+time_interval2 = str(tdelta)
+time_interval3 = int(time_interval2)
+
+# # 오후 5시 이후의 XPATH
+# btn_2hr = browser.find_element(By.XPATH,'//*[@id="2"]') # 오후 5시 이후의 xpath
+# btn_30min = browser.find_element(By.XPATH, '//*[@id="4"]') #
+# btn_1hr = browser.find_element(By.XPATH,'//*[@id="3"]') #
 
 # 할인 등록 전, 이미 등록되어 있는지 사전 확인
 
