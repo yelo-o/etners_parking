@@ -12,16 +12,19 @@ browser = webdriver.Chrome()
 browser.maximize_window() # 창 확대
 browser.get("http://uspace.awp1.co.kr/login")
 
+# 비밀번호는 보안을 위해 로컬 파일에 저장합니다. (pw.txt 파일 참조)
+f = open("pw.txt", 'r')
+uspaces = f.readlines() # 유스페이스 주차장 관리자 아이디와 비밀번호 List에 저장
+uspaces = [uspace.rstrip('\n') for uspace in uspaces]
+f.close()
+
 # id, pw 저장 <= 추후에 입력한 값으로 받아서 하는것으로 진행 예정
-# 로그인
-real_id = "2b-704"
-real_pw = "20200801"
 abc = '149저1200'
 
 input_id = browser.find_element(By.XPATH,'//*[@id="userId"]')
 input_pw = browser.find_element(By.XPATH,'//*[@id="loginForm"]/li[3]/input')
-input_id.send_keys(real_id)
-input_pw.send_keys(real_pw)
+input_id.send_keys(uspaces[0])
+input_pw.send_keys(uspaces[1])
 close_btn= browser.find_element(By.XPATH,'//*[@id="modal-window"]/div/div/div[3]/a[2]')
 login_btn= browser.find_element(By.CLASS_NAME,'login_area_btn')
 close_btn.click()
