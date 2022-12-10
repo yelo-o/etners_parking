@@ -19,7 +19,7 @@ uspaces = [uspace.rstrip('\n') for uspace in uspaces]
 f.close()
 
 # id, pw 저장 <= 추후에 입력한 값으로 받아서 하는것으로 진행 예정
-abc = '85'
+abc = '10'
 
 input_id = browser.find_element(By.XPATH,'//*[@id="userId"]')
 input_pw = browser.find_element(By.XPATH,'//*[@id="loginForm"]/li[3]/input')
@@ -31,15 +31,17 @@ close_btn.click()
 login_btn.click()
 
 # 메인 페이지 진입
-time.sleep(3)
+time.sleep(5)
 # 차량 검색
 input_car_number = browser.find_element(By.XPATH, '//*[@id="schCarNo"]')
 input_car_number.send_keys(abc)
 search_btn = browser.find_element(By.XPATH, '//*[@id="sForm"]/input[3]')
 search_btn.click()
+time.sleep(5)
 
 # 입력한 번호가 포함되는 차량 리스트 불러오기
 list_car = browser.find_elements(By.XPATH,'//*[@id="gridMst"]/div[2]/table/tbody')
+print(list_car)
 sim_list=[]
 for car in list_car:
     for c in car.text.split('\n'):
