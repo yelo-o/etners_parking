@@ -66,6 +66,7 @@ memo = browser.find_element(By.XPATH, '//*[@id="memo"]')
 
 t_table = [110,140,170,200,230,260,290,320,350,380,410,440,470,500,530,560,590,620,650,680,710,740,770,800]
 if tdelta < int(t_table[0]): # 110
+    print("")
     min120()
 elif tdelta < int(t_table[1]): # 140 < 120+30
     min120()
