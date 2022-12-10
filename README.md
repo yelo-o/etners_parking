@@ -3,6 +3,7 @@
 2. selenium
 3. requests
 4. beautifulsoup4
+5. pyautogui
 
 # 2022.12.07
 + 아이디와 비밀번호를 파일 안에 포함시킨채로 원격 저장소에 올리고 있었다.

@@ -5,6 +5,20 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 import pyautogui as pg
 
+# 함수
+def min120():
+    btn_2hr.click()
+
+def min60():
+    time.sleep(1)
+    memo.send_keys(reason)
+    btn_1hr.click()
+
+def min30():
+    time.sleep(1)
+    memo.send_keys(reason)
+    btn_30min.click()
+
 # 계정 정보
 f = open("pw.txt", 'r')
 uspaces = f.readlines() # 유스페이스 주차장 관리자 아이디와 비밀번호 List에 저장
@@ -52,49 +66,39 @@ memo = browser.find_element(By.XPATH, '//*[@id="memo"]')
 
 t_table = [110,140,170,200,230,260,290,320,350,380,410,440,470,500,530,560,590,620,650,680,710,740,770,800]
 if tdelta < int(t_table[0]): # 110
-    print(btn[0])
-    memo.send_keys(reason)
-    btn_2hr.click()
+    min120()
 elif tdelta < int(t_table[1]): # 140 < 120+30
-    print(btn[0])
-    btn_2hr.click()
-    time.sleep(1)
-    print(btn[2])
-    memo.send_keys(reason)
-    btn_30min.click()
+    min120()
+    min30()
 elif tdelta < int(t_table[2]): # 170 < 120+60
-    print(btn[0])
-    btn_2hr.click()
-    print(btn[1])
-    time.sleep(1)
-    memo.send_keys(reason)
-    
+    min120()
+    min60()
 elif tdelta < int(t_table[3]): # 200 < 120+60+30
-    print(btn[0])
-    print(btn[1])
-    print(btn[2])
+    min120()
+    min60()
+    min30()
 elif tdelta < int(t_table[4]): # 230 < 120+60+60
-    print(btn[0])
-    print(btn[1])
-    print(btn[1])
+    min120()
+    min60()
+    min60()
     print("200~230 사이")
 elif tdelta < int(t_table[5]): # 260 <120+60+60+30
-    print(btn[0])
-    print(btn[1])
-    print(btn[1])
-    print(btn[2])
+    min120()
+    min60()
+    min60()
+    min30()
     print("230~260 사이")
 elif tdelta < int(t_table[6]): # 290 < 120+60+60+60
-    print(btn[0])
-    print(btn[1])
-    print(btn[1])
-    print(btn[1])
+    min120()
+    min60()
+    min60()
+    min60()
     print("260~290 사이")
 elif tdelta < int(t_table[7]): # 320 <120+60+60+60+30
-    print(btn[0])
-    print(btn[1])
-    print(btn[1])
-    print(btn[1])
-    print(btn[2])
+    min120()
+    min60()
+    min60()
+    min60()
+    min30()
 else:
     print("주차 시간이 많이 경과되었습니다. 주차 시간을 확인해주세요")
