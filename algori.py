@@ -64,7 +64,7 @@ btn_1hr = browser.find_element(By.XPATH,'//*[@id="3"]')
 btn_30min = browser.find_element(By.XPATH, '//*[@id="2"]')
 memo = browser.find_element(By.XPATH, '//*[@id="memo"]')
 
-t_table = [110,140,170,200,230,260,290,320,350,380,410,440,470,500,530,560,590,620,650,680,710,740,770,800]
+t_table = [110,140,170,200,230,260,290,320,350,380,410,440,470,500,530,560,590,620,650,680,710,740,770,800,830,860,890,920]
 if tdelta < int(t_table[0]): # 110
     print("")
     min120()

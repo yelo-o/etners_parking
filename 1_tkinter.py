@@ -3,6 +3,7 @@ from tkinter import *
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
+import pyautogui as pg
 # 함수
 def select_car():
     global car_number 
@@ -12,6 +13,7 @@ def select_car():
 
 # def close_window(self):
 #     self.quit()
+car_number = pg.prompt(text = "차량번호를 입력하세요", title='번호')
 
 root = Tk()
 root.title("nado")
@@ -31,7 +33,7 @@ uspaces = [uspace.rstrip('\n') for uspace in uspaces]
 f.close()
 
 # id, pw 저장 <= 추후에 입력한 값으로 받아서 하는것으로 진행 예정
-car_number = '10'
+# car_number = '10'
 input_id = browser.find_element(By.XPATH,'//*[@id="userId"]')
 input_pw = browser.find_element(By.XPATH,'//*[@id="loginForm"]/li[3]/input')
 input_id.send_keys(uspaces[0])
