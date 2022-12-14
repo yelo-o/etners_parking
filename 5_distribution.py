@@ -5,6 +5,9 @@ from tkinter import filedialog
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 import openpyxl
 
 root = Tk()
@@ -41,7 +44,8 @@ def min30():
 # 셀레니움 실행
 options = webdriver.ChromeOptions()
 options.add_experimental_option("excludeSwitches", ["enable-logging"]) # 쓸모없는 로그 삭제
-browser = webdriver.Chrome(options=options)
+service = Service(ChromeDriverManager(path="DRIVER").install())
+browser = webdriver.Chrome(service=service, options=options)
 browser.get("http://uspace.awp1.co.kr/login")
 # 비밀번호는 보안을 위해 로컬 파일에 저장합니다. (pw.txt 파일 참조)
 f = open("pw.txt", 'r')
