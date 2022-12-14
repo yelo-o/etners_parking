@@ -6,6 +6,13 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 import openpyxl
+import sys, os
+
+if  getattr(sys, 'frozen', False): 
+    chromedriver_path = os.path.join(sys._MEIPASS, "chromedriver.exe") # 실행 파일과 크롬드라이버가 같은 폴더에 있다는 뜻
+    driver = webdriver.Chrome(chromedriver_path)
+else:
+    driver = webdriver.Chrome()
 
 root = Tk()
 root.filename =  filedialog.askopenfilename(initialdir = "C:/Users/flyordig/Desktop/mgpy/etners_parking",title = "주차 데이터가 있는 엑셀 파일을 골라주세요.",filetypes = (("excel files","*.xlsx"),("all files","*.*")))
@@ -42,11 +49,8 @@ options = webdriver.ChromeOptions()
 options.add_experimental_option("excludeSwitches", ["enable-logging"]) # 쓸모없는 로그 삭제
 browser = webdriver.Chrome(options=options)
 browser.get("http://uspace.awp1.co.kr/login")
-# 비밀번호는 보안을 위해 로컬 파일에 저장합니다. (pw.txt 파일 참조)
-f = open("pw.txt", 'r')
-uspaces = f.readlines() # 유스페이스 주차장 관리자 아이디와 비밀번호 List에 저장
-uspaces = [uspace.rstrip('\n') for uspace in uspaces]
-f.close()
+# 유스페이스 주차관리 아이디/비번
+uspaces = ['2b-704','20200801'] # 유스페이스 주차장 관리자 아이디와 비밀번호 List에 저장
 # 상기 정보를 이용하여 로그인
 input_id = browser.find_element(By.XPATH,'//*[@id="userId"]')
 input_pw = browser.find_element(By.XPATH,'//*[@id="loginForm"]/li[3]/input')
@@ -58,19 +62,14 @@ close_btn.click()
 login_btn.click()
 time.sleep(2)
 # data 받아서 차량번호(car_num) 주차사유(reason) 얻기
-# filename = 'parking_data.xlsx' # 열고 싶은 파일 이름 저장
-
 book = openpyxl.load_workbook(ssfile) # 엑셀 파일 열기
 ws = book.active # 시트 활성화
-row_max = ws.max_row # row_max = 엑셀 파일 내 행숫자를 읽음 ※ 주의 0부터 읽는거 아님 1부터 읽음
 data = [] # 빈 리스트 생성
 btn = [120,60,30]
 memo = browser.find_element(By.XPATH, '//*[@id="memo"]')
 t_table = [0,110,140,170,200,230,260,290,320,350,380,410,440,470,500,530,560,590,620,650,680,710,740,770,800,830,860,890,920]
 sheet = book.worksheets[0]
-# for i in range(row_max):
 for row in ws.rows:
-    # data.append([row[i].value, row[i+1].value])
     data.append([row[0].value,row[1].value])
 for i in range(len(data)):
     car_num = data[i][0]
