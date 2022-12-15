@@ -14,7 +14,6 @@ def min60():
 def min30():
     print("30분 버튼 클릭")
     
-
 options = webdriver.ChromeOptions()
 options.add_experimental_option("excludeSwitches", ["enable-logging"]) # 쓸모없는 로그 삭제
 browser = webdriver.Chrome(options=options)

@@ -65,7 +65,7 @@ time.sleep(2)
 book = openpyxl.load_workbook(ssfile) # 엑셀 파일 열기
 ws = book.active # 시트 활성화
 data = [] # 빈 리스트 생성
-btn = [120,60,30]
+# btn = [120,60,30]
 memo = browser.find_element(By.XPATH, '//*[@id="memo"]')
 t_table = [0,110,140,170,200,230,260,290,320,350,380,410,440,470,500,530,560,590,620,650,680,710,740,770,800,830,860,890,920]
 sheet = book.worksheets[0]
