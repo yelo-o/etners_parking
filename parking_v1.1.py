@@ -29,12 +29,11 @@ class SelectEvent:
         window.mainloop()
         
     def processinDiv(self):
-        tkraise()
         indiv()
     def processGrp(self):
         grp()
-    # def openFrame(frame):
-    #     frame.tkraise()
+    def openFrame(frame):
+        frame.tkraise()
     
 # 개별 등록
 class indiv:
