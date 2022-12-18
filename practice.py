@@ -52,5 +52,5 @@ vulture = AttackUnit("벌쳐", 80, 10, 20)
 # 배틀크루저 : 공중 유닛, 체력 굉장히 좋음, 공격력도 좋음
 battlecruiser = FlyableAttackUnit("배틀크루저", 500, 25, 3)
 
-vulture.move("11시")
+# vulture.move("11시")
 battlecruiser.move("9시")

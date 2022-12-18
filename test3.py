@@ -39,7 +39,11 @@ class Window:
 
     def clicker(self):
         print("첫번째 버튼")
-
+class autoEnroll:
+    def __init__(self, car_number, reason):
+        self.car_number = car_number
+        self.reason = reason
+    
 class Elder2:
     def __init__(self, master):
         myFrame = Frame(master) # Frame(root) 대신에 Frame(master)
@@ -50,8 +54,6 @@ class Elder2:
 
     def clicker(self):
         print("두번째 버튼")
-
-
 
 e = Window(root)
 e = Window(root)

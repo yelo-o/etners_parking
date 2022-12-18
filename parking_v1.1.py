@@ -16,14 +16,23 @@ class SelectEvent:
     def __init__(self):
         window = Tk()
         window.title("ETNERS")
-        window.geometry("640x480")
-        frame1 = tkinter.Frame(window)
-        frame2 = tkinter.Frame(window)
-        frame1.grid(row=0, column=0, sticky="nsew")
-        frame2.grid(row=0, column=0, sticky="nsew")
-        btnDiv = Button(window, text = "1명 등록", bg = "green", command = self.processinDiv)
-        btnGrp = Button(window, text = "단체 등록", bg = "yellow", command = self.processGrp)
+        window.geometry("640x400+100+100")
+        window.resizable(False, False)
+        frame1 = tkinter.Frame(window) # 1번 프레임 좌측에 배치
+        frame1.pack(side="left", fill="both", expand=True)
+        frame2 = tkinter.Frame(window) # 2번 프레임 우측에 배치
+        frame2.pack(side="right", fill="both", expand=True)
         
+        btnDiv = Button(frame1, text = "1명 등록", bg = "green", command = self.processinDiv)
+        btnGrp = Button(frame2, text = "단체 등록", bg = "yellow", command = self.processGrp)
+        self.myLabel1 = Label( text = "아래에 차량번호를 입력해주세요!")
+        self.myLabel2 = Label( text = "주차 차량 리스트")
+        self.carNumEntry = Entry()
+        self.carList = Listbox()
+        self.btn_search = Button( text="검색", \
+            command=self.search_car)
+        self.btn_select = Button( text="선택", \
+            command=self.select_car)
         btnDiv.pack()
         btnGrp.pack()
         window.mainloop()
@@ -32,37 +41,16 @@ class SelectEvent:
         indiv()
     def processGrp(self):
         grp()
-    def openFrame(frame):
-        frame.tkraise()
     
 # 개별 등록
 class indiv:
     def __init__(self):
         def min120():
-            btn_2hr = browser.find_element(By.XPATH,'//*[@id="1"]')
-            btn_2hr.click()
-            time.sleep(2)
-            btn_ok = browser.find_element(By.XPATH, '//*[@id="modal-window"]/div/div/div[3]/a')
-            btn_ok.click()
-            time.sleep(2)
+            print("2시간 추가용")
         def min60():
-            memo.send_keys(reason)
-            time.sleep(1)
-            btn_1hr = browser.find_element(By.XPATH,'//*[@id="3"]')
-            btn_1hr.click()
-            time.sleep(2)
-            btn_ok = browser.find_element(By.XPATH, '//*[@id="modal-window"]/div/div/div[3]/a')
-            btn_ok.click()
-            time.sleep(2)
+            print("1시간 추가용")
         def min30():
-            memo.send_keys(reason)
-            time.sleep(1)
-            btn_30min = browser.find_element(By.XPATH, '//*[@id="2"]')
-            btn_30min.click()
-            time.sleep(2)
-            btn_ok = browser.find_element(By.XPATH, '//*[@id="modal-window"]/div/div/div[3]/a')
-            btn_ok.click()
-            time.sleep(2)
+            print("30분 추가용")
         global car_number, reason
         car_number = pg.prompt(text = "차량번호를 입력하세요", title='번호') # 차량 넘버 입력
         reason = pg.prompt(text = "사유를 입력하세요", title='사유')# 주차 사유 입력
@@ -76,6 +64,9 @@ class indiv:
         btn2.pack()
         btn3.pack()
         window.mainloop()
+    def select_car(self):
+        self.car_number = str(self.carList.get(self.carList.curselection()))
+        return self.car_number
         
     def min10(self):
         indiv10()
