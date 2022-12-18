@@ -21,7 +21,7 @@ def min30():
 def selection1():
     
 # pyinstaller 셀레니움 저장용
-if  getattr(sys, 'frozen', False): 
+if getattr(sys, 'frozen', False): 
     chromedriver_path = os.path.join(sys._MEIPASS, "chromedriver.exe") # 실행 파일과 크롬드라이버가 같은 폴더에 있다는 뜻
     driver = webdriver.Chrome(chromedriver_path)
 else:
