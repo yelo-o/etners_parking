@@ -11,6 +11,13 @@ import sys, os
 import pyautogui as pg
 from selenium.common.exceptions import NoSuchElementException
 
+if  getattr(sys, 'frozen', False): 
+    options = webdriver.ChromeOptions()
+    options.add_argument("headless") # 창 숨기는 옵션 추가
+    chromedriver_path = os.path.join(sys._MEIPASS, "chromedriver.exe")
+    driver = webdriver.Chrome(chromedriver_path, options=options)
+else:
+    driver = webdriver.Chrome()
 # 기본 변수 설정
 t_table = [0,110,140,170,200,230,260,290,320,350,380,410,440,470,500,530,560,590,620,650,680,710,740,770,800,830,860,890,920]
 # 진짜 버튼 입력 함수
@@ -41,13 +48,6 @@ def min30():
     btn_ok = browser.find_element(By.XPATH, '//*[@id="modal-window"]/div/div/div[3]/a')
     btn_ok.click()
     time.sleep(2)
-# 시간 입력 테스트
-# def min120():
-#     print("2시간 버튼 클릭")
-# def min60():
-#     print("1시간 버튼 클릭")
-# def min30():
-#     print("30분 버튼 클릭")
 def login():
     global browser
     options = webdriver.ChromeOptions()
@@ -79,10 +79,11 @@ def check():
             pass
             return False
 
-def search_car(): 
+def search_car():
+    carList.delete(0, END)
     car_number = carNumEntry.get()
     options = webdriver.ChromeOptions()
-    options.add_argument("headless") # 창 숨기는 옵션 추가
+    # options.add_argument("headless") # 창 숨기는 옵션 추가
     options.add_experimental_option("excludeSwitches", ["enable-logging"])
     browser = webdriver.Chrome(options=options)
     browser.get("http://uspace.awp1.co.kr/login")
@@ -109,14 +110,12 @@ def search_car():
             sim_list.append(a)
             carList.insert(END, a)
     browser.quit() # 브라우저 닫기
-
 def select_car():
         global car_number
         car_number = str(carList.get(carList.curselection()))
         car_info = lblCar.configure(text="선택하신 차량번호는 {}".format(car_number))
         print("버튼 함수 안에서 차량 번호는 : [{}]".format(car_number))
         return car_number
-
 def divMin10(): 
     global reason
     reason = pg.prompt(text = "사유를 입력하세요", title='사유' )# 주차 사유 입력
@@ -229,7 +228,6 @@ def divHr1():
                 min30()
                 for k in range(int(std)):
                     min60()
-
 def enrollGrp():
     root.filename =  filedialog.askopenfilename(initialdir = "C:/Users/flyordig/Desktop/mgpy/etners_parking",title = "주차 데이터가 있는 엑셀 파일을 골라주세요.",filetypes = (("excel files","*.xlsx"),("all files","*.*")))
     ssfile = root.filename
@@ -269,7 +267,7 @@ def enrollGrp():
         search_btn.click()
         time.sleep(2)
         # # 이미 등록이 되어있는지 확인 <----------- 추후 확인 필요
-        # check()
+        check()
         # 시간 계산
         time_parking = browser.find_element(By.XPATH,'//*[@id="entryDate"]').text
         time_in = time_parking[11:]
