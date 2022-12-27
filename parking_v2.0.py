@@ -13,7 +13,7 @@ import sys, os
 import pyautogui as pg
 from selenium.common.exceptions import NoSuchElementException
 
-# 기본 변수 설정
+# 기본 변수 설정 (분)
 t_table = [0,110,140,170,200,230,260,290,320,350,380,410,440,470,500,530,560,590,620,650,680,710,740,770,800,830,860,890,920]
 # 진짜 버튼 입력 함수
 def min120():
@@ -167,7 +167,7 @@ def divMin30():
     time_out = str(now.time())[0:8]
     itime = int(time_in[0:2])*60 + int(time_in[3:5])
     otime = int(time_out[0:2])*60 + int(time_out[3:5])
-    tdelta = otime - itime + 30
+    tdelta = otime - itime + 20
     memo = browser.find_element(By.XPATH, '//*[@id="memo"]')
     print(tdelta, reason, memo)
     for j in range(1,28):
@@ -289,7 +289,7 @@ def enrollGrp():
                         min60()
             else:
                 pass
-# GUI
+# GUI 부분
 root = ttk.Window()
 root.iconbitmap("./favicon.ico")
 root.title("주차 자동 정산")
