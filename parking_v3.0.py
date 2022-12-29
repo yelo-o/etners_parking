@@ -43,6 +43,7 @@ def min30():
     btn_ok = browser.find_element(By.XPATH, '//*[@id="modal-window"]/div/div/div[3]/a')
     btn_ok.click()
     time.sleep(2)
+
 def login():
     global browser
     options = webdriver.ChromeOptions()
@@ -111,7 +112,7 @@ def select_car():
         car_info = lblCar.configure(text="선택한 차량번호 : {}".format(car_number))
         print("버튼 함수 안에서 차량 번호는 : [{}]".format(car_number))
         return car_number
-def divMin10(): 
+def divMin10():
     global reason
     reason = pg.prompt(text = "사유를 입력하세요", title='사유' )# 주차 사유 입력
     login()
@@ -129,26 +130,72 @@ def divMin10():
     time_out = str(now.time())[0:8]
     itime = int(time_in[0:2])*60 + int(time_in[3:5])
     otime = int(time_out[0:2])*60 + int(time_out[3:5])
-    tdelta = otime - itime
+    tt = 10
+    tx = otime - itime
+    tdelta = tx + tt
     memo = browser.find_element(By.XPATH, '//*[@id="memo"]')
-    print(tdelta, reason, memo)
+    print("현재 {}분 경과했고, {}분 후에 나갈 예정입니다.".format(tx, tt))
+    print("{}분 후는 입차시간으로부터 {}분인 {}시간 {}분 경과할 예정입니다.".format(tt,tdelta, int(tdelta/60),tdelta%60))
     for j in range(1,28):
         if int(t_table[j-1]) < tdelta <= int(t_table[j]): # 110~920까지 차례로 대입
-            std = int(t_table[j]-110)/60
-            stupid = int(t_table[j]-110)%60
-            if int(t_table[j]) <= 110:
+            std = int(t_table[j]-120)/60
+            if int(t_table[j]) <= 120:
                 min120()
-            elif int(t_table[j]-110)%60 == 0:
+            elif int(t_table[j]-120)%60 == 0:
                 min120()
                 for k in range(int(std)):
                     min60()
-            elif int(t_table[j]-110)%60 != 0:
+            elif int(t_table[j]-120)%60 != 0:
                 min120()
                 min30()
                 for k in range(int(std)):
                     min60()
         else:
             pass
+    pg.alert("주차 등록이 완료되었습니다.")
+def divOther():
+    global tz, reason
+    tz = int(timeEntry.get())
+    print(tz, type(tz))
+    reason = pg.prompt(text = "사유를 입력하세요", title='사유' )# 주차 사유 입력
+    login()
+    input_car_number = browser.find_element(By.XPATH, '//*[@id="schCarNo"]')
+    input_car_number.send_keys(car_number)
+    search_btn = browser.find_element(By.XPATH, '//*[@id="sForm"]/input[3]')
+    search_btn.click()
+    time.sleep(2)
+    # 이미 등록이 되어있는지 확인
+    check()
+    # 시간 계산
+    time_parking = browser.find_element(By.XPATH,'//*[@id="entryDate"]').text
+    time_in = time_parking[11:]
+    now = datetime.now()
+    time_out = str(now.time())[0:8]
+    itime = int(time_in[0:2])*60 + int(time_in[3:5])
+    otime = int(time_out[0:2])*60 + int(time_out[3:5])
+    tx = otime - itime
+    tdelta = tx + tz
+    memo = browser.find_element(By.XPATH, '//*[@id="memo"]')
+    print("현재 {}분 경과했고, {}분 후에 나갈 예정입니다.".format(tx, tz))
+    print("{}분 후는 입차시간으로부터 {}분인 {}시간 {}분 경과할 예정입니다.".format(tz,tdelta, int(tdelta/60),tdelta%60))
+    for j in range(1,28):
+        if int(t_table[j-1]) < tdelta <= int(t_table[j]): # 110~920까지 차례로 대입
+            std = int(t_table[j]-120)/60
+            if int(t_table[j]) <= 120:
+                min120()
+            elif int(t_table[j]-120)%60 == 0:
+                min120()
+                for k in range(int(std)):
+                    min60()
+            elif int(t_table[j]-120)%60 != 0:
+                min120()
+                min30()
+                for k in range(int(std)):
+                    min60()
+        else:
+            pass
+    pg.alert("주차 등록이 완료되었습니다.")
+
 def enrollGrp():
     root.filename =  filedialog.askopenfilename(initialdir = "C:/Users/flyordig/Desktop/mgpy/etners_parking",title = "주차 데이터가 있는 엑셀 파일을 골라주세요.",filetypes = (("excel files","*.xlsx"),("all files","*.*")))
     ssfile = root.filename
@@ -243,17 +290,21 @@ btn_select.grid(row=6, column=0, sticky="ns",padx=5, pady=5)
 
 
 # 프레임1의 두번째 열
+textEX = tk.StringVar()
+textEX.set("60")
 sep2 = ttk.Separator(frame1, bootstyle = "danger")
 lblCar = ttk.Label(frame1, text="                차량번호", bootstyle="inverse-dark")
 btn0 = ttk.Button(frame1, text="10분 안에 나가요", bootstyle="primary" ,command=divMin10)
-btn1 = ttk.Button(frame1, text="30분 안에 나가요", bootstyle="primary" ,command=divMin30)
-btn2 = ttk.Button(frame1, text="1시간 안에 나가요", bootstyle="primary" ,command=divHr1)
+lblTime = ttk.Label(frame1, text="또는 몇 분 후에 나가실지 \n아래에 숫자 기입 후 클릭해주세요.", bootstyle="primary")
+timeEntry = ttk.Entry(frame1, textvariable = textEX, bootstyle="default")
+btn1 = ttk.Button(frame1, text="분 후에 나가요", bootstyle="primary" ,command=divOther)
 
 sep2.grid(row=0, column=1, sticky="ew",pady=5)
 lblCar.grid(row=2, column=1, sticky="nsew", padx=5, pady=5, ipadx=30, ipady=10)
-btn0.grid(row=4, column=1, sticky="nsew", padx=5, pady=5)
-btn1.grid(row=5, column=1, sticky="ew", padx=5, pady=5)
-btn2.grid(row=6, column=1, sticky="nsew", padx=5, pady=5)
+btn0.grid(row=3, column=1, sticky="ew", padx=5, pady=5)
+lblTime.grid(row=5, column=1, sticky="nsew", ipadx=5, ipady=5)
+timeEntry.grid(row=6, column=1, sticky="nsew", padx=5, pady=5)
+btn1.grid(row=7, column=1, sticky="ew", padx=5, pady=5)
 
 # 프레임2
 sep3 = ttk.Separator(frame2, bootstyle = "info")
