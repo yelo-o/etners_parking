@@ -68,9 +68,10 @@ def check():
         try:
             browser.find_element(By.XPATH,'//*[@id="gridDtl"]/div[2]/table/tbody/tr[2]/td[5]/input')
             pg.alert("해당 차량은 이미 등록되어있습니다.")
+            time.sleep(1)
             # return False
             # browser.quit()
-            exit()
+            # exit()
         except NoSuchElementException:
             pass
             return False
@@ -173,6 +174,7 @@ def divOther():
     time_out = str(now.time())[0:8]
     itime = int(time_in[0:2])*60 + int(time_in[3:5])
     otime = int(time_out[0:2])*60 + int(time_out[3:5])
+    tt = 10
     tx = otime - itime
     tdelta = tx + tz
     memo = browser.find_element(By.XPATH, '//*[@id="memo"]')
@@ -243,25 +245,30 @@ def enrollGrp():
         time_out = str(now.time())[0:8]
         itime = int(time_in[0:2])*60 + int(time_in[3:5])
         otime = int(time_out[0:2])*60 + int(time_out[3:5])
-        tdelta = otime - itime
+        tt = 10
+        tx = otime - itime
+        tdelta = tx + tt
+        print("현재 {}분 경과했고, {}분 후에 나갈 예정입니다.".format(tx, tt))
+        print("{}분 후는 입차시간으로부터 {}분인 {}시간 {}분 경과할 예정입니다.".format(tt,tdelta, int(tdelta/60),tdelta%60))
         print(tdelta)
         for j in range(1,28):
             if int(t_table[j-1]) < tdelta <= int(t_table[j]): # 110~920까지 차례로 대입
-                std = int(t_table[j]-110)/60
-                stupid = int(t_table[j]-110)%60
-                if int(t_table[j]) <= 110:
+                std = int(t_table[j]-120)/60
+                stupid = int(t_table[j]-120)%60
+                if int(t_table[j]) <= 120:
                     min120()
-                elif int(t_table[j]-110)%60 == 0:
+                elif int(t_table[j]-120)%60 == 0:
                     min120()
                     for k in range(int(std)):
                         min60()
-                elif int(t_table[j]-110)%60 != 0:
+                elif int(t_table[j]-120)%60 != 0:
                     min120()
                     min30()
                     for k in range(int(std)):
                         min60()
             else:
                 pass
+    pg.alert("주차 등록이 완료되었습니다.")
 # GUI 부분
 root = ttk.Window()
 root.iconbitmap("./favicon.ico")
