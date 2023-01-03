@@ -58,10 +58,13 @@ def login():
     input_pw = browser.find_element(By.XPATH,'//*[@id="loginForm"]/li[3]/input')
     input_id.send_keys(uspaces[0])
     input_pw.send_keys(uspaces[1])
-    close_btn= browser.find_element(By.XPATH,'//*[@id="modal-window"]/div/div/div[3]/a[2]')
     login_btn= browser.find_element(By.CLASS_NAME,'login_area_btn')
-    close_btn.click()
     login_btn.click()
+    try:
+        close_btn= browser.find_element(By.XPATH,'//*[@id="modal-window"]/div/div/div[3]/a[2]')
+        close_btn.click()
+    except NoSuchElementException:
+        pass
     time.sleep(2)
 def check():
     while True:
@@ -217,10 +220,13 @@ def enrollGrp():
     input_pw = browser.find_element(By.XPATH,'//*[@id="loginForm"]/li[3]/input')
     input_id.send_keys(uspaces[0])
     input_pw.send_keys(uspaces[1])
-    close_btn= browser.find_element(By.XPATH,'//*[@id="modal-window"]/div/div/div[3]/a[2]')
     login_btn= browser.find_element(By.CLASS_NAME,'login_area_btn')
-    close_btn.click()
     login_btn.click()
+    try:
+        close_btn= browser.find_element(By.XPATH,'//*[@id="modal-window"]/div/div/div[3]/a[2]')
+        close_btn.click()
+    except NoSuchElementException:
+        pass
     time.sleep(2)
     book = openpyxl.load_workbook(ssfile) # 엑셀 파일 열기
     ws = book.active # 시트 활성화
